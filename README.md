@@ -1,1 +1,1 @@
-# vuejs-course section-02 exercise
+# vuejs-course section-02 exercises
