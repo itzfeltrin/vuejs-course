@@ -20,4 +20,9 @@ Vue.createApp({
 			this.tasksVisible = !this.tasksVisible;
 		},
 	},
+	computed: {
+		buttonText() {
+			return this.tasksVisible ? "Hide List" : "Show List";
+		},
+	},
 }).mount("#assignment");
