@@ -21,6 +21,7 @@
 <script>
 export default {
     props: ['friend'],
+    emits: ['toggle-favorite'],
     data() {
         return {
             detailsAreVisible: false,

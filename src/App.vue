@@ -7,7 +7,7 @@
             <friend-contact
                 v-for="friend in friends"
                 :key="friend.id"
-                :friend="friend"
+                v-bind="friend"
                 @toggle-favorite="toggleFavoriteStatus"
             ></friend-contact>
         </ul>
