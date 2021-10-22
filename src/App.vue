@@ -3,11 +3,12 @@
         <header>
             <h1>My Friends</h1>
         </header>
+        <new-friend @add-new-friend="addNewFriend"></new-friend>
         <ul>
             <friend-contact
                 v-for="friend in friends"
                 :key="friend.id"
-                v-bind="friend"
+                :friend="friend"
                 @toggle-favorite="toggleFavoriteStatus"
             ></friend-contact>
         </ul>
@@ -42,6 +43,13 @@ export default {
 
             friend.isFavorite = !friend.isFavorite;
         },
+        addNewFriend(newFriend) {
+            const newFriendObj = {
+                ...newFriend,
+                id: newFriend.name.split(' ')[0].toLowerCase(),
+            };
+            this.friends.push(newFriendObj);
+        },
     },
 };
 </script>
@@ -72,7 +80,8 @@ header {
     padding: 0;
     list-style: none;
 }
-#app li {
+#app li,
+#app form {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     margin: 1rem auto;
     border-radius: 10px;
