@@ -10,6 +10,7 @@
                 :key="friend.id"
                 :friend="friend"
                 @toggle-favorite="toggleFavoriteStatus"
+                @remove-friend="removeFriend"
             ></friend-contact>
         </ul>
     </section>
@@ -49,6 +50,9 @@ export default {
                 id: newFriend.name.split(' ')[0].toLowerCase(),
             };
             this.friends.push(newFriendObj);
+        },
+        removeFriend(friendId) {
+            this.friends = this.friends.filter(el => el.id !== friendId);
         },
     },
 };

@@ -15,13 +15,14 @@
                 {{ friend.email }}
             </li>
         </ul>
+        <button @click="$emit('remove-friend', friend.id)">Remove</button>
     </li>
 </template>
 
 <script>
 export default {
     props: ['friend'],
-    emits: ['toggle-favorite'],
+    emits: ['toggle-favorite', 'remove-friend'],
     data() {
         return {
             detailsAreVisible: false,
