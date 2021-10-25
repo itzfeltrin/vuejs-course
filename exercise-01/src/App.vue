@@ -4,7 +4,6 @@
             :active-user="activeUser"
             :editing="editing"
             @change-active-user="changeActiveUser"
-            @toggle-editing="toggleEditing"
         ></user-data>
         <active-user
             :active-user="activeUser"
@@ -27,6 +26,7 @@ export default {
     methods: {
         changeActiveUser(newActiveUser) {
             this.activeUser = newActiveUser;
+            this.editing = false;
         },
         toggleEditing() {
             this.editing = !this.editing;

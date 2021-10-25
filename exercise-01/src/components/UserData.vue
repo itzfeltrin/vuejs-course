@@ -26,12 +26,10 @@
 
 <script>
 export default {
-    /* eslint-disable indent */
     props: ['activeUser', 'editing'],
-    emits: ['change-active-user', 'toggle-editing'],
+    emits: ['change-active-user'],
     watch: {
         editing: function(value) {
-            console.log('changed');
             if (value) {
                 this.newUser = { ...this.activeUser };
             }
@@ -39,12 +37,10 @@ export default {
     },
     data() {
         return {
-            newUser: this.editing
-                ? this.activeUser
-                : {
-                      username: '',
-                      age: 18,
-                  },
+            newUser: {
+                username: '',
+                age: 18,
+            },
         };
     },
     methods: {
@@ -54,9 +50,6 @@ export default {
                 username: '',
                 age: 18,
             };
-            if (this.editing) {
-                this.$emit('toggle-editing');
-            }
         },
     },
 };
