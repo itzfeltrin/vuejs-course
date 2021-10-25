@@ -1,16 +1,18 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true
+    env: {
+        browser: true,
+        es2021: true,
     },
-    "extends": "plugin:vue/essential",
-    "parserOptions": {
-        "ecmaVersion": 13,
-        "sourceType": "module"
+    extends: ['plugin:vue/essential', 'standard'],
+    parserOptions: {
+        ecmaVersion: 12,
+        sourceType: 'module',
     },
-    "plugins": [
-        "vue"
-    ],
-    "rules": {
-    }
+    plugins: ['vue'],
+    rules: {
+        indent: ['error', 4],
+        semi: 'off',
+        'comma-dangle': 'off',
+        'space-before-function-paren': 'off',
+    },
 };
