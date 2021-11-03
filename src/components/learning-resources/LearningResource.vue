@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <base-card>
         <header>
             <h3>{{ resource.title }}</h3>
             <button>
@@ -10,7 +10,7 @@
         <nav>
             <a :href="resource.link" target="_blank">View Resource</a>
         </nav>
-    </div>
+    </base-card>
 </template>
 
 <script>
