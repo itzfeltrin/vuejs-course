@@ -8,6 +8,7 @@
                     name="title"
                     type="text"
                     v-model="newResource.title"
+                    required
                 />
             </div>
             <div class="form-control">
@@ -17,6 +18,7 @@
                     name="description"
                     rows="3"
                     v-model="newResource.description"
+                    required
                 ></textarea>
             </div>
             <div class="form-control">
@@ -26,6 +28,7 @@
                     name="link"
                     type="url"
                     v-model="newResource.link"
+                    required
                 />
             </div>
             <div>
