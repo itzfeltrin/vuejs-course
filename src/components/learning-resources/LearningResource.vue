@@ -2,7 +2,7 @@
     <base-card>
         <header>
             <h3>{{ resource.title }}</h3>
-            <base-button mode="flat">
+            <base-button mode="flat" @click="removeResource(resource.id)">
                 <span>Delete</span>
             </base-button>
         </header>
@@ -16,6 +16,7 @@
 <script>
 export default {
     props: ['resource'],
+    inject: ['removeResource'],
 };
 </script>
 

@@ -11,7 +11,9 @@
             >Add Resource</base-button
         >
     </base-card>
-    <component :is="selectedTab"></component>
+    <keep-alive>
+        <component :is="selectedTab"></component>
+    </keep-alive>
 </template>
 
 <script>
@@ -26,18 +28,6 @@ export default {
     data() {
         return {
             selectedTab: 'stored-resources',
-        };
-    },
-    methods: {
-        changeSelected(tab) {
-            this.selectedTab = tab;
-        },
-        getButtonMode(tab) {
-            return this.selectedTab === tab ? null : 'flat';
-        },
-    },
-    provide() {
-        return {
             resources: [
                 {
                     id: 1,
@@ -52,6 +42,33 @@ export default {
                     link: 'https://google.com',
                 },
             ],
+        };
+    },
+    methods: {
+        changeSelected(tab) {
+            this.selectedTab = tab;
+        },
+        getButtonMode(tab) {
+            return this.selectedTab === tab ? null : 'flat';
+        },
+        addNewResource(newResource) {
+            const obj = {
+                id: new Date().toISOString(),
+                ...newResource,
+            };
+            this.resources.unshift(obj);
+            this.selectedTab = 'stored-resources';
+        },
+        removeResource(resourceId) {
+            console.log(resourceId);
+            this.resources = [];
+        },
+    },
+    provide() {
+        return {
+            resources: this.resources,
+            addNewResource: this.addNewResource,
+            removeResource: this.removeResource,
         };
     },
 };
