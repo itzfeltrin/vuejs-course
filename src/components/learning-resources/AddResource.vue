@@ -1,4 +1,13 @@
 <template>
+    <base-dialog v-if="isFormInvalid" @close="closeDialog">
+        <template #default>
+            <p>Unfortunately, at least one input value is invalid.</p>
+            <p>Please correct the highlighted fields and try again.</p>
+        </template>
+        <template #actions>
+            <base-button @click="closeDialog"> Okay </base-button>
+        </template>
+    </base-dialog>
     <base-card>
         <form @submit.prevent="handleSubmit">
             <div class="form-control">
@@ -8,7 +17,6 @@
                     name="title"
                     type="text"
                     v-model="newResource.title"
-                    required
                 />
             </div>
             <div class="form-control">
@@ -18,7 +26,6 @@
                     name="description"
                     rows="3"
                     v-model="newResource.description"
-                    required
                 ></textarea>
             </div>
             <div class="form-control">
@@ -28,7 +35,6 @@
                     name="link"
                     type="url"
                     v-model="newResource.link"
-                    required
                 />
             </div>
             <div>
@@ -39,6 +45,8 @@
 </template>
 
 <script>
+import BaseDialog from '../UI/BaseDialog.vue';
+
 const initialValues = {
     title: '',
     description: '',
@@ -46,20 +54,38 @@ const initialValues = {
 };
 
 export default {
+    components: {
+        BaseDialog,
+    },
     data() {
         return {
             newResource: {
                 ...initialValues,
             },
+            isFormInvalid: false,
         };
     },
     inject: ['addNewResource'],
     methods: {
         handleSubmit() {
+            let isFormInvalid = false;
+            Object.keys(this.newResource).forEach((key) => {
+                if (this.newResource[key] === '') {
+                    isFormInvalid = true;
+                }
+            });
+
+            if (isFormInvalid) {
+                this.isFormInvalid = true;
+                return;
+            }
             this.addNewResource(this.newResource);
             this.newResource = {
                 ...initialValues,
             };
+        },
+        closeDialog() {
+            this.isFormInvalid = false;
         },
     },
 };
