@@ -1,13 +1,15 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <div class="form-control">
+        <div class="form-control" :class="{ invalid: errors?.userName }">
             <label for="user-name">Your Name</label>
             <input
                 id="user-name"
                 name="user-name"
                 type="text"
-                v-model="values.userName"
+                v-model.trim="values.userName"
+                @blur="validate('userName')"
             />
+            <p v-if="errors?.userName">This is a required field</p>
         </div>
         <div class="form-control">
             <label for="age">Your Age (Years)</label>
@@ -87,6 +89,18 @@
                 <label for="how-other">Other</label>
             </div>
         </div>
+        <div class="form-control">
+            <RatingControl v-model="values.rating" />
+        </div>
+        <div class="form-control">
+            <input
+                id="confirms"
+                name="confirms"
+                type="checkbox"
+                v-model="values.confirms"
+            />
+            <label for="confirms">I agree to something</label>
+        </div>
         <div>
             <button>Save Data</button>
         </div>
@@ -94,24 +108,39 @@
 </template>
 
 <script>
+import RatingControl from './RatingControl.vue';
+
 const defaultValues = {
     userName: '',
     age: null,
     referrer: 'google',
     interests: [],
     how: null,
+    confirm: false,
+    rating: null,
 };
 
 export default {
+    components: {
+        RatingControl,
+    },
     data() {
         return {
             values: { ...defaultValues },
+            errors: {},
         };
     },
     methods: {
         handleSubmit() {
             console.log(this.values);
             this.values = { ...defaultValues };
+        },
+        validate(key) {
+            if (this.values[key] === '') {
+                this.errors[key] = 'This field is required';
+            } else {
+                delete this.errors[key];
+            }
         },
     },
 };
@@ -129,6 +158,14 @@ form {
 
 .form-control {
     margin: 0.5rem 0;
+}
+
+.form-control.invalid input {
+    border-color: red;
+}
+
+.form-control.invalid label {
+    color: red;
 }
 
 label {
