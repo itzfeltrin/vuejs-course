@@ -1,0 +1,53 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+:root {
+	--item-height: 28px;
+}
+
+body {
+	width: 100vw;
+	height: 100vh;
+	background: #cdcdcd;
+}
+
+#app {
+	width: clamp(300px, 40%, 500px);
+	margin: 96px auto;
+}
+
+form {
+	display: flex;
+	grid-gap: 4px;
+	align-items: center;
+}
+
+input,
+button {
+	height: var(--item-height);
+	padding: 0 8px;
+	outline: none;
+}
+
+input {
+	flex: 1;
+}
+
+ul {
+	list-style: none;
+	margin: calc(var(--item-height) / 2) 0;
+}
+
+li {
+	height: var(--item-height);
+	line-height: var(--item-height);
+	padding: 0 8px;
+}
+
+li:nth-child(odd) {
+	background-color: #dfdfdf;
+}
