@@ -31,7 +31,6 @@ export default {
     methods: {
         loadData(teamId) {
             const team = this.teams.find((team) => team.id === teamId);
-            console.log(teamId);
             if (team) {
                 this.teamName = team.name;
                 this.members = this.users.filter((user) =>
