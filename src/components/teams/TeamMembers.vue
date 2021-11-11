@@ -34,7 +34,6 @@ export default {
             if (team) {
                 this.teamName = team.name;
                 const { sort } = this.$route.query;
-                console.log(sort);
                 this.members = this.users
                     .filter((user) => team.members.includes(user.id))
                     .sort((x, y) => {
