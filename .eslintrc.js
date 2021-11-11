@@ -10,7 +10,7 @@ module.exports = {
     },
     plugins: ['vue'],
     rules: {
-        indent: ['error', 4],
+        indent: ['warn', 4],
         semi: 'off',
         'comma-dangle': 'off',
         'space-before-function-paren': 'off',

@@ -33,9 +33,17 @@ export default {
             const team = this.teams.find((team) => team.id === teamId);
             if (team) {
                 this.teamName = team.name;
-                this.members = this.users.filter((user) =>
-                    team.members.includes(user.id),
-                );
+                const { sort } = this.$route.query;
+                console.log(sort);
+                this.members = this.users
+                    .filter((user) => team.members.includes(user.id))
+                    .sort((x, y) => {
+                        if (sort === 'asc') {
+                            return x.fullName > y.fullName ? 1 : -1;
+                        } else {
+                            return x.fullName < y.fullName ? 1 : -1;
+                        }
+                    });
             }
         },
     },
