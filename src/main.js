@@ -18,8 +18,9 @@ const router = createRouter({
             component: TeamsList,
         },
         {
-            path: '/teams/:id',
+            path: '/teams/:teamId',
             component: TeamMembers,
+            props: true,
         },
     ],
     linkActiveClass: 'active',
