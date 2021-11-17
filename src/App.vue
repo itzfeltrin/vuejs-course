@@ -3,7 +3,6 @@
         <TheCounter />
         <FavoriteValue />
         <ChangeCounter />
-        <button @click="addTen">Add 10</button>
     </BaseContainer>
 </template>
 
@@ -19,11 +18,6 @@ export default {
         TheCounter,
         ChangeCounter,
         FavoriteValue,
-    },
-    methods: {
-        addTen() {
-            this.$store.dispatch('increase', 10);
-        },
     },
 };
 </script>
