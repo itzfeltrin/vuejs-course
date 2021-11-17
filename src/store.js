@@ -1,11 +1,10 @@
 /* eslint-disable indent */
 import { createStore } from 'vuex';
 
-export const store = createStore({
+const counterModule = {
     state() {
         return {
             counter: 0,
-            authenticated: false,
         };
     },
     mutations: {
@@ -14,9 +13,6 @@ export const store = createStore({
         },
         increase(state, payload) {
             state.counter += payload;
-        },
-        setAuth(state, payload) {
-            state.authenticated = payload;
         },
     },
     actions: {
@@ -27,12 +23,6 @@ export const store = createStore({
         },
         increase(context, payload) {
             context.commit('increase', payload);
-        },
-        logIn(context) {
-            context.commit('setAuth', true);
-        },
-        logOut(context) {
-            context.commit('setAuth', false);
         },
     },
     getters: {
@@ -46,6 +36,32 @@ export const store = createStore({
                 ? 100
                 : getters.finalCounter;
         },
+    },
+};
+
+export const store = createStore({
+    modules: {
+        counter: counterModule,
+    },
+    state() {
+        return {
+            authenticated: false,
+        };
+    },
+    mutations: {
+        setAuth(state, payload) {
+            state.authenticated = payload;
+        },
+    },
+    actions: {
+        logIn(context) {
+            context.commit('setAuth', true);
+        },
+        logOut(context) {
+            context.commit('setAuth', false);
+        },
+    },
+    getters: {
         isAuthenticated(state) {
             return state.authenticated;
         },
