@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { createApp } from 'vue';
 import { createStore } from 'vuex';
 
@@ -15,6 +16,18 @@ const store = createStore({
         },
         increase(state, payload) {
             state.counter += payload;
+        },
+    },
+    getters: {
+        finalCounter(state) {
+            return state.counter * 3;
+        },
+        normalizedCounter(_, getters) {
+            return getters.finalCounter < 0
+                ? 0
+                : getters.finalCounter > 100
+                ? 100
+                : getters.finalCounter;
         },
     },
 });
