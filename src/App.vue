@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         addTen() {
-            this.$store.commit('increase', 10);
+            this.$store.dispatch('increase', 10);
         },
     },
 };
