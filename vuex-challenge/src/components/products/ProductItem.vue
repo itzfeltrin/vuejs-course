@@ -2,35 +2,29 @@
     <li class="product">
         <div class="product__data">
             <div class="product__image">
-                <img :src="image" :alt="title" />
+                <img :src="item.image" :alt="item.title" />
             </div>
             <div class="product__text">
-                <h3>{{ title }}</h3>
+                <h3>{{ item.title }}</h3>
                 <base-badge mode="highlight" :no-margin-left="true">
-                    <h4>${{ price }}</h4>
+                    <h4>${{ item.price }}</h4>
                 </base-badge>
-                <p>{{ description }}</p>
+                <p>{{ item.description }}</p>
             </div>
         </div>
         <div class="product__actions">
-            <button @click="addToCart">Add to Cart</button>
+            <button @click="addItem(item)">Add to Cart</button>
         </div>
     </li>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-    inject: ['addProductToCart'],
-    props: ['id', 'image', 'title', 'price', 'description'],
+    props: ['item'],
     methods: {
-        addToCart() {
-            this.addProductToCart({
-                id: this.id,
-                image: this.image,
-                title: this.title,
-                price: this.price,
-            });
-        },
+        ...mapActions('cart', ['addItem']),
     },
 };
 </script>
