@@ -14,7 +14,7 @@ export default {
         // addTen() {
         //     this.$store.dispatch('increase', 10);
         // },
-        ...mapActions(['increment', 'increase']),
+        ...mapActions('counter', ['increment', 'increase']),
     },
 };
 </script>

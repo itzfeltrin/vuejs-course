@@ -1,7 +1,6 @@
 /* eslint-disable indent */
-import { createStore } from 'vuex';
-
-const counterModule = {
+export const counterModule = {
+    namespaced: true,
     state() {
         return {
             counter: 0,
@@ -38,32 +37,3 @@ const counterModule = {
         },
     },
 };
-
-export const store = createStore({
-    modules: {
-        counter: counterModule,
-    },
-    state() {
-        return {
-            authenticated: false,
-        };
-    },
-    mutations: {
-        setAuth(state, payload) {
-            state.authenticated = payload;
-        },
-    },
-    actions: {
-        logIn(context) {
-            context.commit('setAuth', true);
-        },
-        logOut(context) {
-            context.commit('setAuth', false);
-        },
-    },
-    getters: {
-        isAuthenticated(state) {
-            return state.authenticated;
-        },
-    },
-});
