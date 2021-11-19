@@ -1,19 +1,16 @@
 module.exports = {
-	env: {
-		browser: true,
-		es2021: true,
-	},
-	extends: ["plugin:vue/essential", "standard"],
-	parserOptions: {
-		ecmaVersion: 12,
-		sourceType: "module",
-	},
-	plugins: ["vue"],
-	rules: {
-		indent: ["error", 4],
-		semi: "off",
-		"comma-dangle": "off",
-		"space-before-function-paren": "off",
-		"vue/no-multiple-template-root": "off",
-	},
+    env: {
+        node: true,
+    },
+    extends: ['plugin:vue/vue3-essential', 'eslint:recommended'],
+    parserOptions: {
+        parser: 'babel-eslint',
+    },
+    rules: {
+        indent: ['error', 4],
+        semi: 'off',
+        'comma-dangle': 'off',
+        'space-before-function-paren': 'off',
+        'vue/no-multiple-template-root': 'off',
+    },
 };
