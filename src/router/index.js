@@ -22,7 +22,7 @@ export const router = createRouter({
             component: CoachDetails,
             children: [
                 {
-                    path: '/contact',
+                    path: 'contact',
                     component: CoachContact,
                 },
             ],
