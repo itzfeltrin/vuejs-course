@@ -36,7 +36,7 @@ export const router = createRouter({
             component: RequestsReceived,
         },
         {
-            path: '/:notFound(*)',
+            path: '/:notFound(.*)',
             component: NotFound,
         },
     ],

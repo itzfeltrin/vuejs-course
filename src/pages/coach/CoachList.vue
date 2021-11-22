@@ -1,3 +1,8 @@
 <template>
-    <h1>coach list</h1>
+    <section>
+        <span>Coach List</span>
+    </section>
+    <section>
+        <span>Filter</span>
+    </section>
 </template>
