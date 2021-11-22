@@ -2,14 +2,19 @@
     <li>
         <h3>{{ fullName }}</h3>
         <h4>${{ coach.hourlyRate }}/hour</h4>
-        <ul v-for="area in coach.areas" :key="area">
-            <li>
-                {{ area }}
-            </li>
-        </ul>
+        <div>
+            <base-badge
+                v-for="area in coach.areas"
+                :key="area"
+                :type="area"
+                :title="area"
+            ></base-badge>
+        </div>
         <div class="actions">
-            <router-link :to="coachContactLink">Contact</router-link>
-            <router-link :to="coachDetailsLink">View Details</router-link>
+            <base-button mode="outlined" link :to="coachContactLink"
+                >Contact</base-button
+            >
+            <base-button link :to="coachDetailsLink">View Details</base-button>
         </div>
     </li>
 </template>
