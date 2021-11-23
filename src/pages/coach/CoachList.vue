@@ -1,11 +1,16 @@
 <template>
-    <section>FILTER</section>
-    <base-card>
-        <div class="controls">
-            <base-button mode="outlined">Refresh</base-button>
-            <base-button link to="/register">Register as Coach</base-button>
-        </div>
-        <section>
+    <section>
+        <CoachFilter
+            :active-filters="activeFilters"
+            @change-filter="setFilters"
+        />
+    </section>
+    <section>
+        <base-card>
+            <div class="controls">
+                <base-button mode="outlined">Refresh</base-button>
+                <base-button link to="/register">Register as Coach</base-button>
+            </div>
             <ul v-if="hasCoaches">
                 <CoachItem
                     v-for="coach in filteredCoaches"
@@ -15,23 +20,46 @@
             </ul>
             <h3 v-else>No coaches found.</h3>
             <!-- <span>Coach List</span> -->
-        </section></base-card
-    >
+        </base-card>
+    </section>
 </template>
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
+import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 export default {
     components: {
         CoachItem,
+        CoachFilter,
+    },
+    data() {
+        return {
+            activeFilters: {
+                frontend: true,
+                backend: true,
+                career: true,
+            },
+        };
     },
     computed: {
         filteredCoaches() {
-            return this.$store.getters['coaches/coaches'];
+            const allCoaches = this.$store.getters['coaches/coaches'];
+            return allCoaches.filter((coach) =>
+                coach.areas.some((area) =>
+                    Object.keys(this.activeFilters)
+                        .filter((key) => this.activeFilters[key])
+                        .includes(area),
+                ),
+            );
         },
         hasCoaches() {
             return this.$store.getters['coaches/hasCoaches'];
+        },
+    },
+    methods: {
+        setFilters(filters) {
+            this.activeFilters = filters;
         },
     },
 };
