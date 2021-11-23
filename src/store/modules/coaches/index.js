@@ -24,14 +24,31 @@ export const coachesModule = {
             ],
         };
     },
-    mutations: {},
-    actions: {},
+    mutations: {
+        addCoach(state, coach) {
+            state.coaches.push(coach);
+        },
+    },
+    actions: {
+        addCoach(context, coach) {
+            const newCoach = {
+                id: context.rootGetters.userId,
+                ...coach,
+            };
+            context.commit('addCoach', newCoach);
+        },
+    },
     getters: {
         coaches(state) {
             return state.coaches;
         },
         hasCoaches(state) {
             return state.coaches && state.coaches.length > 0;
+        },
+        isCoach(state, _, _2, rootGetters) {
+            return state.coaches
+                .map((coach) => coach.id)
+                .includes(rootGetters.userId);
         },
     },
 };
