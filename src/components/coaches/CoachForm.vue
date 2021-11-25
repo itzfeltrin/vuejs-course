@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="submitForm">
-        <div class="form-control">
+        <div class="form-control" :class="{ invalid: errors.firstName }">
             <label for="firstName">First Name</label>
             <input
                 type="text"
@@ -9,7 +9,7 @@
                 v-model.trim="form.firstName"
             />
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{ invalid: errors.lastName }">
             <label for="lastName">Last Name</label>
             <input
                 type="text"
@@ -18,7 +18,7 @@
                 v-model.trim="form.lastName"
             />
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{ invalid: errors.description }">
             <label for="description">Description</label>
             <input
                 name="description"
@@ -27,7 +27,7 @@
                 rows="5"
             />
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{ invalid: errors.hourlyRate }">
             <label for="hourlyRate">Hourly Rate</label>
             <input
                 type="number"
@@ -36,7 +36,7 @@
                 v-model.number="form.hourlyRate"
             />
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{ invalid: errors.areas }">
             <h3>Areas of Expertise</h3>
             <div>
                 <input
@@ -74,25 +74,63 @@
 </template>
 
 <script>
+import * as yup from 'yup';
+
 const initialValues = {
     firstName: '',
     lastName: '',
     description: '',
-    hourlyRate: '',
+    hourlyRate: 0,
     areas: [],
 };
+
+const initialErrors = {
+    firstName: null,
+    lastName: null,
+    description: null,
+    hourlyRate: null,
+    areas: null,
+};
+
+const formSchema = yup.object({
+    firstName: yup.string().required('First name is required'),
+    lastName: yup.string().required('Last name is required'),
+    description: yup.string().required('Description is required'),
+    hourlyRate: yup
+        .number()
+        .required('Hourly rate is required')
+        .min(0, "Hourly rate shouldn't be negative"),
+    areas: yup.array().min(1, 'At least one area of expertise is required'),
+});
 
 export default {
     emits: ['on-submit'],
     data() {
         return {
             form: { ...initialValues },
+            errors: { ...initialErrors },
         };
     },
     methods: {
-        submitForm() {
-            this.$emit('on-submit', this.form);
-            this.form = { ...initialValues };
+        async validateForm() {
+            this.errors = { ...initialErrors };
+            try {
+                await formSchema.validate(this.form, { abortEarly: false });
+                return true;
+            } catch (err) {
+                err.inner.forEach((error) => {
+                    this.errors[error.path] = error.message;
+                });
+                return false;
+            }
+        },
+        submitForm: async function () {
+            const isValid = await this.validateForm();
+
+            if (isValid) {
+                this.$emit('on-submit', this.form);
+                this.form = { ...initialValues };
+            }
         },
     },
 };
