@@ -7,6 +7,7 @@
                 name="firstName"
                 id="firstName"
                 v-model.trim="form.firstName"
+                @blur="clearError('firstName')"
             />
         </div>
         <div class="form-control" :class="{ invalid: errors.lastName }">
@@ -16,6 +17,7 @@
                 name="lastName"
                 id="lastName"
                 v-model.trim="form.lastName"
+                @blur="clearError('lastName')"
             />
         </div>
         <div class="form-control" :class="{ invalid: errors.description }">
@@ -24,6 +26,7 @@
                 name="description"
                 id="description"
                 v-model.trim="form.description"
+                @blur="clearError('description')"
                 rows="5"
             />
         </div>
@@ -34,6 +37,7 @@
                 name="hourlyRate"
                 id="hourlyRate"
                 v-model.number="form.hourlyRate"
+                @blur="clearError('hourlyRate')"
             />
         </div>
         <div class="form-control" :class="{ invalid: errors.areas }">
@@ -45,6 +49,7 @@
                     id="frontend"
                     value="frontend"
                     v-model="form.areas"
+                    @blur="clearError('hourlyRate')"
                 />
                 <label for="frontend">Frontend Development</label>
             </div>
@@ -55,6 +60,7 @@
                     id="backend"
                     value="backend"
                     v-model="form.areas"
+                    @blur="clearError('hourlyRate')"
                 />
                 <label for="backend">Backend Development</label>
             </div>
@@ -65,10 +71,12 @@
                     id="career"
                     value="career"
                     v-model="form.areas"
+                    @blur="clearError('hourlyRate')"
                 />
                 <label for="career">Career Development</label>
             </div>
         </div>
+        <p v-if="!isFormValid">Please fix the above errors and submit again.</p>
         <base-button type="submit">Register</base-button>
     </form>
 </template>
@@ -111,6 +119,11 @@ export default {
             errors: { ...initialErrors },
         };
     },
+    computed: {
+        isFormValid() {
+            return Object.values(this.errors).every((error) => error === null);
+        },
+    },
     methods: {
         async validateForm() {
             this.errors = { ...initialErrors };
@@ -124,7 +137,10 @@ export default {
                 return false;
             }
         },
-        submitForm: async function () {
+        clearError(field) {
+            this.errors[field] = null;
+        },
+        async submitForm() {
             const isValid = await this.validateForm();
 
             if (isValid) {
