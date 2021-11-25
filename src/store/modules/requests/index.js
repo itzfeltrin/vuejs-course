@@ -20,8 +20,11 @@ export const requestsModule = {
         },
     },
     getters: {
-        requests(state) {
-            return state.requests;
+        requests(state, _, _2, rootGetters) {
+            const currentCoachId = rootGetters.userId;
+            return state.requests.filter(
+                (request) => request.coachId === currentCoachId,
+            );
         },
     },
 };
