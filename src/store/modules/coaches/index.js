@@ -62,14 +62,14 @@ export const coachesModule = {
             if (!res.ok) {
                 const err = new Error(data.message || 'Failed to fetch!');
                 throw err;
-            } else {
-                const coaches = Object.keys(data).map((key) => ({
-                    ...data[key],
-                    id: key,
-                }));
-
-                context.commit('setCoaches', coaches);
             }
+
+            const coaches = Object.keys(data).map((key) => ({
+                ...data[key],
+                id: key,
+            }));
+
+            context.commit('setCoaches', coaches);
         },
     },
     getters: {

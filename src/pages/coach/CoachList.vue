@@ -95,7 +95,7 @@ export default {
             this.error = null;
         },
     },
-    mounted() {
+    created() {
         this.loadCoaches();
     },
 };
