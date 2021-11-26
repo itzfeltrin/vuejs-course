@@ -1,41 +1,46 @@
 <template>
-    <base-dialog
-        :show="Boolean(error)"
-        title="An error ocurred!"
-        @close="clearError"
-    >
-        <p>{{ error }}</p>
-    </base-dialog>
-    <section>
-        <CoachFilter
-            :active-filters="activeFilters"
-            @change-filter="setFilters"
-        />
-    </section>
-    <section>
-        <base-card>
-            <div class="controls">
-                <base-button mode="outlined" @click="loadCoaches(true)"
-                    >Refresh</base-button
-                >
-                <base-button v-if="!isCoach && !isLoading" link to="/register"
-                    >Register as Coach</base-button
-                >
-            </div>
-            <div v-if="isLoading">
-                <base-spinner></base-spinner>
-            </div>
-            <ul v-else-if="hasCoaches">
-                <CoachItem
-                    v-for="coach in filteredCoaches"
-                    :key="coach.id"
-                    :coach="coach"
-                />
-            </ul>
-            <h3 v-else>No coaches found.</h3>
-            <!-- <span>Coach List</span> -->
-        </base-card>
-    </section>
+    <div>
+        <base-dialog
+            :show="Boolean(error)"
+            title="An error ocurred!"
+            @close="clearError"
+        >
+            <p>{{ error }}</p>
+        </base-dialog>
+        <section>
+            <CoachFilter
+                :active-filters="activeFilters"
+                @change-filter="setFilters"
+            />
+        </section>
+        <section>
+            <base-card>
+                <div class="controls">
+                    <base-button mode="outlined" @click="loadCoaches(true)"
+                        >Refresh</base-button
+                    >
+                    <base-button
+                        v-if="!isCoach && !isLoading"
+                        link
+                        to="/register"
+                        >Register as Coach</base-button
+                    >
+                </div>
+                <div v-if="isLoading">
+                    <base-spinner></base-spinner>
+                </div>
+                <ul v-else-if="hasCoaches">
+                    <CoachItem
+                        v-for="coach in filteredCoaches"
+                        :key="coach.id"
+                        :coach="coach"
+                    />
+                </ul>
+                <h3 v-else>No coaches found.</h3>
+                <!-- <span>Coach List</span> -->
+            </base-card>
+        </section>
+    </div>
 </template>
 
 <script>
