@@ -11,11 +11,14 @@
                 <base-button mode="outlined" @click="loadCoaches"
                     >Refresh</base-button
                 >
-                <base-button v-if="!isCoach" link to="/register"
+                <base-button v-if="!isCoach && !isLoading" link to="/register"
                     >Register as Coach</base-button
                 >
             </div>
-            <ul v-if="hasCoaches">
+            <div v-if="isLoading">
+                <base-spinner></base-spinner>
+            </div>
+            <ul v-else-if="hasCoaches">
                 <CoachItem
                     v-for="coach in filteredCoaches"
                     :key="coach.id"
@@ -39,6 +42,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             activeFilters: {
                 frontend: true,
                 backend: true,
@@ -69,7 +73,10 @@ export default {
             this.activeFilters = filters;
         },
         loadCoaches() {
-            this.$store.dispatch('coaches/loadCoaches');
+            this.isLoading = true;
+            this.$store.dispatch('coaches/loadCoaches').then(() => {
+                this.isLoading = false;
+            });
         },
     },
     mounted() {
