@@ -2,6 +2,7 @@ export const coachesModule = {
     namespaced: true,
     state() {
         return {
+            lastFetch: null,
             coaches: [
                 {
                     id: 'c1',
@@ -31,6 +32,9 @@ export const coachesModule = {
         setCoaches(state, coaches) {
             state.coaches = coaches;
         },
+        setLastFecth(state) {
+            state.lastFetch = new Date().getTime();
+        },
     },
     actions: {
         async addCoach(context, coach) {
@@ -53,7 +57,10 @@ export const coachesModule = {
                 });
             }
         },
-        async loadCoaches(context) {
+        async loadCoaches(context, payload) {
+            // if cached data is less than 1 minute old, return cached data
+            if (!payload?.forceRefresh && !context.getters.shouldUpdate) return;
+
             const res = await fetch(
                 'https://vuejs-course-fc094-default-rtdb.firebaseio.com/coaches.json',
             );
@@ -70,6 +77,7 @@ export const coachesModule = {
             }));
 
             context.commit('setCoaches', coaches);
+            context.commit('setLastFecth');
         },
     },
     getters: {
@@ -83,6 +91,11 @@ export const coachesModule = {
             return state.coaches
                 .map((coach) => coach.id)
                 .includes(rootGetters.userId);
+        },
+        shouldUpdate(state) {
+            if (!state.lastFetch) return true;
+            const currentTime = new Date().getTime();
+            return (currentTime - state.lastFetch) / 1000 > 60;
         },
     },
 };
