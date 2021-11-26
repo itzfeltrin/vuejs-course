@@ -60,7 +60,8 @@ export const coachesModule = {
             const data = await res.json();
 
             if (!res.ok) {
-                // error ...
+                const err = new Error(data.message || 'Failed to fetch!');
+                throw err;
             } else {
                 const coaches = Object.keys(data).map((key) => ({
                     ...data[key],
