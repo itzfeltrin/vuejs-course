@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 export default {
     setup() {
@@ -24,6 +24,10 @@ export default {
         const setAge = (newValue) => {
             age.value = newValue;
         };
+
+        watch(fullName, (newValue) => {
+            console.log(`Full name changed to ${newValue}`);
+        });
 
         return { fullName, age, firstName, lastName, setAge };
     },
